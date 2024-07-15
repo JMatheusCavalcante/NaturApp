@@ -1,2 +1,2 @@
 # NaturApp
-Gestão fácil de ganhos/gastos pra microempreendedores.
+Gestão fácil de ganhos/gastos para microempreendedores.
