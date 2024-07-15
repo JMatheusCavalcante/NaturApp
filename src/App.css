@@ -1,38 +1,419 @@
-.App {
-  text-align: center;
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  font-family: 'Arial', sans-serif;
+  background-color: #f5f5f5;
+  overflow: hidden;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+#root {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  justify-content: center; /* Centraliza verticalmente */
+  width: 100%;
+  min-height: 100vh; /* Altura mínima de 100% da viewport */
+  padding: 5%;
+  padding-bottom: 50%;
+  
+}
+
+
+body{
+  background-image: url('C:\Users\Usuario\Desktop\Programacao web\MinhasContasAPP\client\public\minhas-contas-app\public\background.jpg'); /* Substitua pelo caminho da sua imagem */
+  background-size: cover; /* Garante que a imagem cubra todo o fundo */
+  background-position: center; /* Centraliza a imagem */
+  background-repeat: no-repeat; /* Garante que o background não repita */
+  background-color: #f5f5f5;
+}
+
+
+.App{
+  width: 100%;
+  overflow: hidden;
+  
+}
+
+.App-header {
+  width: 100%;
+  
+  padding: 10px;
+  background-color: #2e1f00ce;
+  color: #ffffff;
+  text-align: center;
+  margin-top: 35%;
+  padding-top: 5%; 
+  opacity: 0;
+  animation: fadeIn 1s forwards; /* Animação de fade-in */
+  overflow: hidden;
+}
+
+
+
+/* Tela de boas-vindas */
+
+.welcome-screen {
+  text-align: center;
+  padding: 20px;
+  
+  
+}
+
+/*-----------------FONTES--------------------------------------------*/
+
+
+h1 {
+  font-size: 1.6em;
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  margin-bottom: 10px;
+  color: #fffaed;
+}
+
+h2 {
+  font-size: 1em;
+  margin-bottom: 10px;
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+h3 {
+  font-size: 1.6em;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin-bottom: 10px;
+  color: #0c814b;
+  position:static;
+}
+
+h2 {
+  font-size: 1em;
+  margin-bottom: 10px;
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+p {
+  font-size: 1em;
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  text-align: left;
+  color: #ffffff;
+}
+
+/* -----------------CSS para os botões ---------------*/
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+  margin-top: 15%;
+  padding: 0 2%; /* Margem lateral para centralizar os botões */
+}
+
+.app-button {
+  text-align: left;  
+  padding: 10px 20px;
+  font-size: 1.2em;
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   color: white;
+  gap: 8px; /* Espaçamento entre o ícone e o texto */
+  background-color: #c07300;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  height: 80px;
+  width: 100%;
+  text-decoration: none;
+  
 }
 
-.App-link {
-  color: #61dafb;
+
+
+.back-button{
+  text-align: left;
+  padding: 10px 20px;
+  font-size: 1.1em;
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  color: white;
+  background-color: #c07300;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  height: 80px;
+  width: 100%;
+  
+}
+.app-button:active {
+  transform: scale(0.95);
+  background: linear-gradient(45deg, #ffe600, #ff9100);
+  box-shadow: 0 6px 8px rgba(255, 255, 255, 0.452);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.app-button i{
+color: #48daff;
+font-size: 24px;
+margin-right: 3%;
 }
+.app-button:active i{
+  color: #005b72;
+  
+  }
+
+  button a, .app-button a {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .app-button a:active, .app-button a:visited, .app-button a:link, .app-button a:hover {
+    text-decoration: none;
+    color: inherit;
+  }
+
+
+/* -----------------CSS para o ícone de carregamento ---------------*/
+
+.loading-overlay {
+  position: fixed; /* Fixa a overlay no viewport */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fundo semi-transparente preto */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 3s ease-out; /* Animação de fade-in em 2 segundos */
+  z-index: 9999; /* Garante que a overlay esteja acima de todo o conteúdo */
+}
+
+/* Animação de fade-in */
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* Estilo para o ícone de carregamento */
+.loader {
+  border: 4px solid #ffa600ec; /* Cor do spinner */
+  border-top: 4px solid #ffe600; /* Cor da parte superior do spinner */
+  border-radius: 20%; /* Faz o spinner redondo */
+  width: 60px;
+  height: 60px;
+  animation: spin 3s linear infinite; /* Animação de rotação */
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+  0% { transform: rotate(0deg); }
+}
+
+/*---------------------------------------------------------------------- */
+/*-------------------AREA VENDAS DO DIA -------------------------------- */
+/*---------------------------------------------------------------------- */
+.vendas-totais{
+  color: #3e7402;
+  background-color: #ffffff;
+  font-size: 14px;
+  padding: 5px;
+}
+.vendasdodia-container {
+  background-color: #2e1f00ce; /* Mesma cor de fundo da página inicial */
+  color: #ffffff;
+  padding: 20px;
+  border-radius: 5px;
+  width: 100%;
+  margin: 0 auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 1s forwards; /* Animação de fade-in */
+  margin-top: 35%;
+  padding-bottom: 40%;
+  height: 700px;
+}
+
+.vendas-buttons{
+  margin-top: 40%;
+  display: flex;
+  flex-direction: column;
+  gap: 17px;    
+  
+}
+
+
+
+.vendas-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  
+}
+
+.vendas-form label {
+  display: flex;
+  flex-direction: column;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  
+}
+
+.vendas-form input {
+  padding: 8px;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  
+}
+
+.vendas-form button {
+  background-color: #c07300;
+  color: white;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  padding: 10px;
+  font-size: 1.2em;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  
+  
+}
+
+
+
+/*---------------------------------------------------------------------- */
+/*-------------------AREA Historico -------------------------------- */
+/*---------------------------------------------------------------------- */
+
+.table-container {
+  margin-top:35%;
+  width: 100%;
+  
+  animation: fadeIn 1s forwards; /* Animação de fade-in */
+  position: relative;
+}
+
+.historico-vendas {
+  background-color: #ffd382cc;
+  text-align: center;
+  border-radius: 5px;
+  padding-top: 5px;
+  display:flexbox;
+}
+
+.historico-vendas h3 {
+  margin: 0;
+  padding: 10px 0;
+  
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  
+}
+
+.table-scrollable {
+  max-height: 250px; /* Altura máxima da área rolável da tabela */
+  overflow-y: auto;
+  margin-top: 20px; /* Espaço entre o título e a tabela rolável */
+}
+
+.historico-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  box-shadow: 0 0 10px rgb(0, 0, 0);
+  background-color: #ffd382cc;
+  border-radius: 4px;
+  color: #7a4500;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  
+}
+
+.historico-table th,
+.historico-table td {
+  padding: 12px 15px;
+  text-align: center;
+  font-size: 1em;
+  
+}
+
+.historico-table th {
+  position: sticky;
+  top: 1px; /* Altura do h3 */
+  background-color: #f1ffe3;
+  color: #be6c00;
+  font-weight: bold;
+  z-index: 1;
+  font-size: small;
+
+}
+
+.historico-table tbody tr:nth-child(even) {
+  background-color: #e7c585cc;
+  
+}
+
+
+
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  
+}
+
+.delete-button i {
+  color: #da6e17;
+  font-size: 1.2rem;
+}
+
+
+
+
+
+
+/*---------------------------------------------------------------------*/
+/*----------------------HISTORICO DE GASTOS-------------------------*/
+/*---------------------------------------------------------------------*/
+.historico-gastos{
+  background-color: #ffd382cc;
+  text-align: center;
+  border-radius: 5px;
+  padding-top: 10px;
+  border-top: 10px solid #000000a2;
+  animation: fadeIn 1s forwards; /* Animação de fade-in */
+}
+
+
+
+/* Rodapé */
+.footer {
+  text-align: center;
+  padding-left: 20%;
+  margin-top: 10%;
+  position: relative;
+  
+  width: 100%;
+}
+
+.footer-container{
+  background-color: #837c1a1a;
+  margin-top: 35%;
+  border-radius: 5%;
+  box-shadow: 0 1px 3px rgba(255, 208, 0, 0.6), 0 8px 16px rgba(105, 87, 3, 0.3);}
+
+.footer h4 {
+  font-size: 17px;
+  color: #ffe7b3;
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+
+
