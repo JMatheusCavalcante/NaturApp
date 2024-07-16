@@ -6,6 +6,8 @@ html, body {
   font-family: 'Arial', sans-serif;
   background-color: #f5f5f5;
   overflow: hidden;
+  background-image: url('images/background.jpg'); /* Caminho relativo à pasta src */
+
 }
 
 
@@ -29,7 +31,6 @@ html, body {
 
 
 body{
-  background-image: url('C:\Users\Usuario\Desktop\Programacao web\MinhasContasAPP\client\public\minhas-contas-app\public\background.jpg'); /* Substitua pelo caminho da sua imagem */
   background-size: cover; /* Garante que a imagem cubra todo o fundo */
   background-position: center; /* Centraliza a imagem */
   background-repeat: no-repeat; /* Garante que o background não repita */
