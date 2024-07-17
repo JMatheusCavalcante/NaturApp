@@ -7,10 +7,11 @@ const Home = () => (
     <div className="main-container">
       <h1>Bem-vinda, amor!</h1>
       <h2>Aqui você pode gerenciar seu negócio, criar metas e mais.</h2>
-      <p>Escolha uma opção:</p>
+      
       
       <div className="button-container">  
         <Link to="/vendasdodia">
+        
           <button className="app-button">
             <i className="fas fa-chart-line"></i><strong> Vendas do Dia </strong>
           </button>

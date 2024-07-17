@@ -24,8 +24,8 @@ html, body {
   justify-content: center; /* Centraliza verticalmente */
   width: 100%;
   min-height: 100vh; /* Altura mínima de 100% da viewport */
-  padding: 5%;
-  padding-bottom: 50%;
+  padding: 6%;
+  padding-bottom: 30%;
   
 }
 
@@ -46,16 +46,17 @@ body{
 
 .App-header {
   width: 100%;
-  
+  height: 640px;
   padding: 10px;
   background-color: #2e1f00ce;
   color: #ffffff;
   text-align: center;
-  margin-top: 35%;
+  margin-top: 30%;
   padding-top: 5%; 
   opacity: 0;
   animation: fadeIn 1s forwards; /* Animação de fade-in */
   overflow: hidden;
+  text-align: left;
 }
 
 
@@ -74,7 +75,7 @@ body{
 
 h1 {
   font-size: 1.6em;
-  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   margin-bottom: 10px;
   color: #fffaed;
 }
@@ -102,7 +103,7 @@ h2 {
 p {
   font-size: 1em;
   font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  text-align: left;
+
   color: #ffffff;
 }
 
@@ -112,8 +113,9 @@ p {
   display: flex;
   flex-direction: column;
   gap: 17px;
-  margin-top: 15%;
+  margin-top: 12%;
   padding: 0 2%; /* Margem lateral para centralizar os botões */
+  text-align: left;
 }
 
 .app-button {
@@ -125,11 +127,11 @@ p {
   gap: 8px; /* Espaçamento entre o ícone e o texto */
   background-color: #c07300;
   border: none;
-  border-radius: 2px;
+  border-radius: 5px;
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.3s ease;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  height: 80px;
+  height: 65px;
   width: 100%;
   text-decoration: none;
   
@@ -236,13 +238,13 @@ margin-right: 3%;
   margin: 0 auto;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   animation: fadeIn 1s forwards; /* Animação de fade-in */
-  margin-top: 35%;
+  margin-top: 25%;
   padding-bottom: 40%;
-  height: 700px;
+  height: 620px;
 }
 
 .vendas-buttons{
-  margin-top: 40%;
+  margin-top: 15%;
   display: flex;
   flex-direction: column;
   gap: 17px;    
@@ -397,8 +399,8 @@ margin-right: 3%;
 /* Rodapé */
 .footer {
   text-align: center;
-  padding-left: 20%;
-  margin-top: 10%;
+  padding-left: 35%;
+  margin-top: 45%;
   position: relative;
   
   width: 100%;
@@ -406,12 +408,12 @@ margin-right: 3%;
 
 .footer-container{
   background-color: #837c1a1a;
-  margin-top: 35%;
+  margin-top: 20%;
   border-radius: 5%;
   box-shadow: 0 1px 3px rgba(255, 208, 0, 0.6), 0 8px 16px rgba(105, 87, 3, 0.3);}
 
 .footer h4 {
-  font-size: 17px;
+  font-size: 15px;
   color: #ffe7b3;
   font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }

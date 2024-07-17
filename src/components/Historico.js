@@ -12,7 +12,7 @@ const Historico = () => {
       const allSales = await getAllSales();
       const salesWithTotal = allSales.map(sale => ({
         ...sale,
-        total: sale.sanduiches * 5 + sale.caldo * 5 + sale.cafe * 3 // Ajuste os preços conforme necessário
+        total: sale.sanduiches * 5 + sale.caldo * 5 + sale.cafe * 2 // Ajuste os preços conforme necessário
       }));
 
       setSales(salesWithTotal);
@@ -26,7 +26,7 @@ const Historico = () => {
     const updatedSales = await getAllSales();
     const salesWithTotal = updatedSales.map(sale => ({
       ...sale,
-      total: sale.sanduiches * 5 + sale.caldo * 5 + sale.cafe * 3 // Ajuste os preços conforme necessário
+      total: sale.sanduiches * 5 + sale.caldo * 5 + sale.cafe * 2 // Ajuste os preços conforme necessário
     }));
 
     setSales(salesWithTotal);
