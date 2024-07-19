@@ -298,7 +298,6 @@ margin-right: 3%;
 .table-container {
   margin-top:35%;
   width: 100%;
-  
   animation: fadeIn 1s forwards; /* Animação de fade-in */
   position: relative;
 }
@@ -309,6 +308,7 @@ margin-right: 3%;
   border-radius: 5px;
   padding-top: 5px;
   display:flexbox;
+  
 }
 
 .historico-vendas h3 {
@@ -355,7 +355,7 @@ margin-right: 3%;
   font-weight: bold;
   z-index: 1;
   font-size: small;
-
+  
 }
 
 .historico-table tbody tr:nth-child(even) {
