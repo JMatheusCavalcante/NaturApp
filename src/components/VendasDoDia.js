@@ -34,7 +34,7 @@ const VendasDoDia = () => {
       <h1>Vendas do Dia</h1>
       <form onSubmit={handleSubmit} className="vendas-form">
         <label>
-          Sanduíches:
+          Sanduíche:
           <input 
             type="number" 
             name="sanduiches" 

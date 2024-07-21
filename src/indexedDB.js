@@ -1,7 +1,7 @@
 // src/indexedDB.js
 
 const DATABASE_NAME = 'MinhasContasApp';
-const DATABASE_VERSION = 1;
+const DATABASE_VERSION = 2; // Incrementa a versão do banco de dados para forçar a atualização
 const SALES_STORE_NAME = 'vendas';
 const EXPENSES_STORE_NAME = 'custos'; // Nome do novo store para custos
 
@@ -62,7 +62,19 @@ export const addExpense = async (expense) => {
   return store.add(expense);
 };
 
-
+export const getAllExpenses = async () => {
+  const db = await openDB();
+  const store = db.transaction(EXPENSES_STORE_NAME, 'readonly').objectStore(EXPENSES_STORE_NAME);
+  return new Promise((resolve, reject) => {
+    const request = store.getAll();
+    request.onsuccess = () => {
+      resolve(request.result);
+    };
+    request.onerror = (event) => {
+      reject('Erro ao obter dados: ' + event.target.errorCode);
+    };
+  });
+};
 
 export const deleteExpense = async (id) => {
   const db = await openDB();

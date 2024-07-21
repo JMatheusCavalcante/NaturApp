@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { getAllSales, deleteSale } from '../indexedDB';
+import { getAllSales, deleteSale, getAllExpenses, deleteExpense } from '../indexedDB';
 import '../App.css';
 
 const Historico = () => {
   const [sales, setSales] = useState([]);
   const [dailyTotal, setDailyTotal] = useState(0);
+  const [expenses, setExpenses] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -14,9 +15,11 @@ const Historico = () => {
         ...sale,
         total: sale.sanduiches * 5 + sale.caldo * 5 + sale.cafe * 2 // Ajuste os preços conforme necessário
       }));
-
       setSales(salesWithTotal);
       calculateDailyTotal(salesWithTotal);
+
+      const allExpenses = await getAllExpenses();
+      setExpenses(allExpenses);
     };
     fetchData();
   }, []);
@@ -28,9 +31,14 @@ const Historico = () => {
       ...sale,
       total: sale.sanduiches * 5 + sale.caldo * 5 + sale.cafe * 2 // Ajuste os preços conforme necessário
     }));
-
     setSales(salesWithTotal);
     calculateDailyTotal(salesWithTotal);
+  };
+
+  const handleDeleteExpense = async (id) => {
+    await deleteExpense(id);
+    const updatedExpenses = await getAllExpenses();
+    setExpenses(updatedExpenses);
   };
 
   const calculateDailyTotal = (sales) => {
@@ -81,19 +89,32 @@ const Historico = () => {
 
       <div className="historico-gastos">
         <h3>Histórico de Gastos</h3>
-        <table className="historico-table">
-          <thead>
-            <tr>
-              <th>Data</th>
-              <th>Valor</th>
-              <th>Descrição</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            {/* Adicione as linhas de despesas aqui */}
-          </tbody>
-        </table>
+        <div className="table-scrollable">
+          <table className="historico-table">
+            <thead>
+              <tr>
+                <th>Data</th>
+                <th>Valor</th>
+                <th>Descrição</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              {expenses.map((expense) => (
+                <tr key={expense.id} className="historico-row">
+                  <td>{expense.data}</td>
+                  <td>{expense.valor}</td>
+                  <td>{expense.descricao}</td>
+                  <td>
+                    <button className="delete-button" onClick={() => handleDeleteExpense(expense.id)}>
+                      <i className="fas fa-trash-alt"></i>
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <Link to="/" className="historico-link">
