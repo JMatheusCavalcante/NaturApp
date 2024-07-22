@@ -7,6 +7,7 @@ const Historico = () => {
   const [sales, setSales] = useState([]);
   const [dailyTotal, setDailyTotal] = useState(0);
   const [expenses, setExpenses] = useState([]);
+  const [gastosTotais, setGastosTotais] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -20,6 +21,7 @@ const Historico = () => {
 
       const allExpenses = await getAllExpenses();
       setExpenses(allExpenses);
+      calculateGastosTotais(allExpenses);
     };
     fetchData();
   }, []);
@@ -39,11 +41,17 @@ const Historico = () => {
     await deleteExpense(id);
     const updatedExpenses = await getAllExpenses();
     setExpenses(updatedExpenses);
+    calculateGastosTotais(updatedExpenses);
   };
 
   const calculateDailyTotal = (sales) => {
     const total = sales.reduce((acc, sale) => acc + sale.total, 0);
     setDailyTotal(total);
+  };
+
+  const calculateGastosTotais = (expenses) => {
+    const total = expenses.reduce((acc, expense) => acc + parseFloat(expense.valor), 0); // Converter para número
+    setGastosTotais(total);
   };
 
   return (
@@ -116,9 +124,11 @@ const Historico = () => {
           </table>
         </div>
       </div>
-
+      <div className="gastos-totais">
+        <h4>Investimentos Totais: $ {parseFloat(gastosTotais).toFixed(2)}</h4> {/* Exibindo o total de gastos */}
+      </div>
       <Link to="/" className="historico-link">
-        <button className="app-button">
+        <button className="historico-app-button">
           <i className="fas fa-chevron-left"></i><strong> Voltar </strong>
         </button>
       </Link>

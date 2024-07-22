@@ -244,7 +244,7 @@ margin-right: 3%;
 }
 
 .vendas-buttons{
-  margin-top: 15%;
+  
   display: flex;
   flex-direction: column;
   gap: 17px;    
@@ -256,7 +256,7 @@ margin-right: 3%;
 .vendas-form {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 2px;
   
 }
 
@@ -296,7 +296,7 @@ margin-right: 3%;
 /*---------------------------------------------------------------------- */
 
 .table-container {
-  margin-top:35%;
+  margin-top:22%;
   width: 100%;
   animation: fadeIn 1s forwards; /* Animação de fade-in */
   position: relative;
@@ -305,7 +305,7 @@ margin-right: 3%;
 .historico-vendas {
   background-color: #ffd382cc;
   text-align: center;
-  border-radius: 5px;
+  border-radius: 4px;
   padding-top: 5px;
   display:flexbox;
   
@@ -313,18 +313,18 @@ margin-right: 3%;
 
 .historico-vendas h3 {
   margin: 0;
-  padding: 10px 0;
+  padding: 10px 0px 1px ;
   
   position: sticky;
-  top: 0;
-  z-index: 2;
+  
+  z-index: 5;
   
 }
 
 .table-scrollable {
-  max-height: 250px; /* Altura máxima da área rolável da tabela */
+  max-height: 220px; /* Altura máxima da área rolável da tabela */
   overflow-y: auto;
-  margin-top: 20px; /* Espaço entre o título e a tabela rolável */
+  margin-top: 15px; /* Espaço entre o título e a tabela rolável */
 }
 
 .historico-table {
@@ -349,8 +349,9 @@ margin-right: 3%;
 
 .historico-table th {
   position: sticky;
-  top: 1px; /* Altura do h3 */
+  top: 0%; /* Altura do h3 */
   background-color: #f1ffe3;
+  height: 5px;
   color: #be6c00;
   font-weight: bold;
   z-index: 1;
@@ -392,7 +393,28 @@ margin-right: 3%;
   padding-top: 10px;
   border-top: 10px solid #000000a2;
   animation: fadeIn 1s forwards; /* Animação de fade-in */
+  max-height: 250px; 
+  
 }
+
+.historico-app-button{
+  text-align: left;  
+  padding: 10px 20px;
+  font-size: 1.2em;
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  color: white;
+  gap: 8px; /* Espaçamento entre o ícone e o texto */
+  background-color: #c07300;
+  border: none;
+  border-radius: 5px;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  height: 65px;
+  width: 100%;
+  text-decoration: none;
+  margin-top: 5%;
+}
+
 .form-gastos {
   background-color: #2e1f00ce; /* Mesma cor de fundo da página inicial */
   color: #ffffff;
@@ -415,7 +437,7 @@ form label {
 }
 
 .input-descricao{
-  padding-bottom: 20%;
+  padding-bottom: 15%;
 }
 
 form input {
@@ -424,7 +446,7 @@ form input {
   width: 100%;
   border: 1px solid #ccc;
   border-radius: 5px;
-  margin-bottom: 5%;
+  margin-bottom: 4%;
 }
 
 .botoes-gastos{
@@ -434,12 +456,23 @@ form input {
   gap: 17px;    
 }
 
+.gastos-totais{
+  color: #3e7402;
+  background-color: #ffffff;
+  font-size: 14px;
+  padding: 6px;
+  z-index: 500;
+  display:block;
+  width: 100%;
+  
+}
 
-/* Rodapé */
+/* ------------------------Rodapé-------------------------------- */
+
 .footer {
   text-align: center;
   padding-left: 32%;
-  margin-top: 39%;
+  margin-top: 42%;
   position: relative;
   
   width: 100%;
