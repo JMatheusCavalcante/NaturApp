@@ -296,7 +296,7 @@ margin-right: 3%;
 /*---------------------------------------------------------------------- */
 
 .table-container {
-  margin-top:22%;
+  margin-top:15%;
   width: 100%;
   animation: fadeIn 1s forwards; /* Animação de fade-in */
   position: relative;
@@ -313,8 +313,8 @@ margin-right: 3%;
 
 .historico-vendas h3 {
   margin: 0;
-  padding: 10px 0px 1px ;
-  
+  padding: 5px 0px 1px ;
+  font-size: 17px;
   position: sticky;
   
   z-index: 5;
@@ -322,7 +322,7 @@ margin-right: 3%;
 }
 
 .table-scrollable {
-  max-height: 220px; /* Altura máxima da área rolável da tabela */
+  max-height: 200px; /* Altura máxima da área rolável da tabela */
   overflow-y: auto;
   margin-top: 15px; /* Espaço entre o título e a tabela rolável */
 }
@@ -393,10 +393,18 @@ margin-right: 3%;
   padding-top: 10px;
   border-top: 10px solid #000000a2;
   animation: fadeIn 1s forwards; /* Animação de fade-in */
-  max-height: 250px; 
+  max-height: 200px; 
+
+} 
+.historico-gastos h3 {
+  margin: 0;
+  padding: 3px 0px 1px ;
+  font-size: 17px;
+  position: sticky;
+  
+  z-index: 5;
   
 }
-
 .historico-app-button{
   text-align: left;  
   padding: 10px 20px;
@@ -462,8 +470,8 @@ form input {
   font-size: 14px;
   padding: 6px;
   z-index: 500;
-  display:block;
   width: 100%;
+  margin-top:17%;
   
 }
 
