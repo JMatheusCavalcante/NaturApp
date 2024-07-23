@@ -1,70 +1,39 @@
-# Getting Started with Create React App
+# NaturApp
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Gestão simples e prática para microempreendedores. (Mobile)
 
-## Available Scripts
+## Índice
 
-In the project directory, you can run:
+- [Instalação Terminal](#instalaçãoT)
+- [Instalação Mobile](#InstalaçãoM)
+- [Uso](#uso)
+- [Licença](#licença)
+- [Contato](#contato)
 
-### `npm start`
+### Pré-requisitos
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Node.js
+- npm (Node Package Manager)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Passos para instalação Terminal
 
-### `npm test`
+1. Clone o repositório:
+   ```bash
+   git clone https://github.com/JMatheusCavalcante/NaturApp.git
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+2. Navegue até o diretório do projeto: 'cd MinhasContasApp' 
 
-### `npm run build`
+### Passos para instalação Mobile
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. Acesse a aplicação pelo link: https://gestaonaturapp.netlify.app
+2. No navegador do seu celular, toque no menu de opções (geralmente três pontos no canto superior direito do navegador).
+3. Selecione "Adicionar à tela inicial".
+4. Confirme a adição. O ícone do NaturApp aparecerá na sua tela inicial.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Licença 
+Todos os direitos reservados. Este software é de propriedade de Matheus Cavalcante. Nenhuma permissão é concedida para usar, copiar, modificar ou distribuir este software sem consentimento explícito.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Contato 
+Para dúvidas ou sugestões, entre em contato através do email jmc.vilasboas2@gmail.com
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+LinkedIn: https://www.linkedin.com/in/matheuscavalcantevb/
