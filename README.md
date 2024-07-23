@@ -10,12 +10,14 @@ Gestão simples e prática para microempreendedores. (Mobile)
 - [Licença](#licença)
 - [Contato](#contato)
 
-### Pré-requisitos
 
-- Node.js
-- npm (Node Package Manager)
+
 
 ### Instalação Terminal
+
+ Pré-requisitos
+- Node.js
+- npm (Node Package Manager)
 
 1. Clone o repositório:
    ```bash
@@ -38,9 +40,11 @@ Sistema feito para microempreendedores com pouca ou nenhuma noção de administr
 
 
 ### Licença 
+
 Todos os direitos reservados. Este software é de propriedade de Matheus Cavalcante. Nenhuma permissão é concedida para usar, copiar, modificar ou distribuir este software sem consentimento explícito.
 
 ### Contato 
+
 Para dúvidas ou sugestões, entre em contato através do email jmc.vilasboas2@gmail.com
 
 LinkedIn: https://www.linkedin.com/in/matheuscavalcantevb/
