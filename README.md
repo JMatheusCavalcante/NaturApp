@@ -4,8 +4,8 @@ Gestão simples e prática para microempreendedores. (Mobile)
 
 ## Índice
 
-- [Instalação Terminal](#instalaçãoT)
-- [Instalação Mobile](#InstalaçãoM)
+- [Instalação Terminal](#instalaçãoTerminal)
+- [Instalação Mobile](#instalaçãoMobile)
 - [Uso](#uso)
 - [Licença](#licença)
 - [Contato](#contato)
@@ -13,19 +13,19 @@ Gestão simples e prática para microempreendedores. (Mobile)
 
 
 
-### Instalação Terminal
+### Instalação Terminal 🛠
 
  Pré-requisitos
 - Node.js
 - npm (Node Package Manager)
 
 1. Clone o repositório:
-   ```bash
+
    git clone https://github.com/JMatheusCavalcante/NaturApp.git
 
 2. Navegue até o diretório do projeto: 'cd MinhasContasApp' 
 
-### Instalação Mobile 
+### Instalação Mobile 📱
 
 1. Acesse a aplicação pelo link: https://gestaonaturapp.netlify.app
 2. No navegador do seu celular, toque no menu de opções (geralmente três pontos no canto superior direito do navegador).
