@@ -113,7 +113,7 @@ const Historico = () => {
                   <td>{expense.data}</td>
                   <td>{expense.valor}</td>
                   <td>{expense.descricao}</td>
-                  <td>
+                  <td>     
                     <button className="delete-button" onClick={() => handleDeleteExpense(expense.id)}>
                       <i className="fas fa-trash-alt"></i>
                     </button>
@@ -127,8 +127,11 @@ const Historico = () => {
       <div className="gastos-totais">
         <h4>Investimentos Totais: $ {parseFloat(gastosTotais).toFixed(2)}</h4> {/* Exibindo o total de gastos */}
       </div>
+      
+      
+      
       <Link to="/" className="historico-link">
-        <button className="historico-app-button">
+         <button className="historico-app-button">
           <i className="fas fa-chevron-left"></i><strong> Voltar </strong>
         </button>
       </Link>
