@@ -35,6 +35,7 @@ body{
   background-position: center; /* Centraliza a imagem */
   background-repeat: no-repeat; /* Garante que o background não repita */
   background-color: #f5f5f5;
+  
 }
 
 
@@ -57,6 +58,7 @@ body{
   animation: fadeIn 1s forwards; /* Animação de fade-in */
   overflow: hidden;
   text-align: left;
+ 
 }
 
 
@@ -74,7 +76,7 @@ body{
 
 
 h1 {
-  font-size: 1.6em;
+  font-size: 1.4em;
   font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   margin-bottom: 10px;
   color: #fffaed;
@@ -107,6 +109,8 @@ p {
   color: #ffffff;
 }
 
+
+
 /* -----------------CSS para os botões ---------------*/
 
 .button-container {
@@ -116,16 +120,22 @@ p {
   margin-top: 12%;
   padding: 0 2%; /* Margem lateral para centralizar os botões */
   text-align: left;
+  
 }
 
 .app-button {
+  display:inline-flex;
+  align-items: center;
+  
+  
+  
   text-align: left;  
-  padding: 10px 20px;
-  font-size: 1.2em;
+  padding: 0px 20px;
+  font-size: 1.0em;
   font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   color: white;
   gap: 8px; /* Espaçamento entre o ícone e o texto */
-  background-color: #da8403b4;
+  background-color: #bd7305e3;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -133,50 +143,31 @@ p {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   height: 58px;
   width: 100%;
-  text-decoration: none;
+  
+
+  
+
   
 }
 
-
-
-.back-button{
-  text-align: left;
-  padding: 10px 20px;
-  font-size: 1.1em;
-  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  color: white;
-  background-color: #c07300;
-  border: none;
-  border-radius: 2px;
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.3s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  height: 80px;
-  width: 100%;
-  
-}
-.app-button:active {
-  transform: scale(0.95);
-  background: linear-gradient(45deg, #ffe600, #ff9100);
-  box-shadow: 0 6px 8px rgba(255, 255, 255, 0.452);
-}
 
 .app-button i{
-color: #48daff;
+color: #ffd99f;
 font-size: 24px;
 margin-right: 3%;
+
 }
 .app-button:active i{
   color: #005b72;
   
   }
 
-  button a, .app-button a {
+button a, .app-button a {
     text-decoration: none;
     color: inherit;
   }
   
-  .app-button a:active, .app-button a:visited, .app-button a:link, .app-button a:hover {
+.app-button a:active, .app-button a:visited, .app-button a:link, .app-button a:hover {
     text-decoration: none;
     color: inherit;
   }
@@ -282,11 +273,10 @@ margin-right: 3%;
   border-radius: 2px;
   cursor: pointer;
   padding: 10px;
-  font-size: 1.2em;
+  font-size: 1.1em;
   transition: transform 0.2s ease, box-shadow 0.3s ease;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  
-  
+ 
 }
 
 
@@ -405,23 +395,7 @@ margin-right: 3%;
   z-index: 5;
   
 }
-.historico-app-button{
-  text-align: left;  
-  padding: 10px 20px;
-  font-size: 1.2em;
-  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  color: white;
-  gap: 8px; /* Espaçamento entre o ícone e o texto */
-  background-color: #c07300;
-  border: none;
-  border-radius: 5px;
-  transition: transform 0.2s ease, box-shadow 0.3s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  height: 65px;
-  width: 100%;
-  text-decoration: none;
-  margin-top: 5%;
-}
+
 
 .form-gastos {
   background-color: #2e1f00ce; /* Mesma cor de fundo da página inicial */
@@ -510,7 +484,7 @@ form input {
 .salvar-button {
   text-align: left;  
   padding: 10px 20px;
-  font-size: 1.2em;
+  font-size: 1.1em;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   color: white;
   gap: 50px; /* Espaçamento entre o ícone e o texto */
@@ -546,8 +520,8 @@ form input {
 }
 
 .salvar-button .check-box {
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
   background-color: #41b851ef;
   border-radius: 50%;
   position: absolute;
@@ -567,10 +541,11 @@ form input {
 
 .salvar-button.active .check-box {
   opacity: 1;
-  left: 110px; /* Ajuste conforme necessário */
+  left: 90px; /* Ajuste conforme necessário */
 }
 
 .salvar-button strong {
   display: inline-block;
   transition: margin-left 1s ease;
+  text-decoration: none;
 }

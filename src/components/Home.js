@@ -10,8 +10,8 @@ const Home = () => (
       
       
       <div className="button-container">  
-        <Link to="/vendasdodia">
         
+        <Link to="/vendasdodia">
           <button className="app-button">
             <i className="fas fa-chart-line"></i><strong> Vendas do Dia </strong>
           </button>

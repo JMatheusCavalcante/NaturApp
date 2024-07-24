@@ -131,7 +131,7 @@ const Historico = () => {
       
       
       <Link to="/" className="historico-link">
-         <button className="historico-app-button">
+         <button className="app-button">
           <i className="fas fa-chevron-left"></i><strong> Voltar </strong>
         </button>
       </Link>
