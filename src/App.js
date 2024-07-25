@@ -9,6 +9,7 @@ import Historico from './components/Historico';
 import './App.css'; // Importe seu arquivo CSS principal aqui
 
 function App() {
+  
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
