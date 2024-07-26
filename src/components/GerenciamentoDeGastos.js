@@ -37,7 +37,7 @@ const GerenciamentoDeGastos = () => {
       <form className='form-gastos' onSubmit={(e) => { e.preventDefault(); handleSave(); }}>
       <h1>Gerenciamento de Gastos</h1>
         <div>
-          <label>Investimento:</label>
+          <label>Investimento</label>
           <input
             type="number"
             value={valor}
@@ -45,7 +45,7 @@ const GerenciamentoDeGastos = () => {
           />
         </div>
         <div>
-          <label>Descrição:</label>
+          <label>Descrição</label>
           <input className='input-descricao'
             type="text"
             value={descricao}
@@ -53,7 +53,7 @@ const GerenciamentoDeGastos = () => {
           />
         </div>
         <div>
-          <label>Data:</label>
+          <label>Data</label>
           <input
             type="date"
             value={data}
