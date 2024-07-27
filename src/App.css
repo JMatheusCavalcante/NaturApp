@@ -463,9 +463,9 @@ form input {
   margin: 0 auto;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   animation: fadeIn 1s forwards; /* Animação de fade-in */
-  margin-top: 29%;
+  margin-top: 21%;
   padding-bottom: 40%;
-  height: 700px;
+  height: 625px;
   
   text-align: center;
 }  
@@ -491,13 +491,13 @@ form input {
   text-decoration: none;
   animation: fadeIn 1s forwards; /* Animação de fade-in */
 }
+
 .Box-sem-metas p{
   text-align: left;
   text-decoration: none;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   
 }
-
 
 .MinhasMetas ul {
   text-align: left;
@@ -523,14 +523,9 @@ form input {
   align-items: center; /* Alinha os itens verticalmente */
 }
 
-
-
-
-
 .Area-Metas p{
  text-align: left;
 }  
-
 
 .Area-Metas h1{
   text-align: left;
@@ -538,10 +533,9 @@ form input {
   padding-bottom: 5%;
 }  
 
-
 .novaMeta-button{
   width: 25%;
-  height: 16%;
+  height: 13%;
   margin: 10%;  
   font-size: 32px;
   background-color: #d47903cc;
@@ -549,19 +543,6 @@ form input {
   box-shadow: 4px 4px 10px  #000000;
   border: none;
   
-}
-
-.novaMeta-button:active{
-  width: 23%;
-  height: 16%;
-  
-  position: relative; 
-  font-size: 32px;
-  background-color: #ff8800;
-  color: #ffffffaf;
-  box-shadow: 4px 4px 10px  #000000;
-  border: none;
-  transition: 0.2s linear;
 }
 
 
@@ -651,12 +632,17 @@ label {
 
 
 input[type="text"] {
+  background: #f3f1ec;
+  padding: 10px;
+  padding-left: 20px;
+  height: 40px;
+  font-size: 14px;
   width: 100%;
-  padding: 8px;
-  margin-top: 5px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  margin-bottom:5% ;
+  border-bottom: 3px solid;
+  border-image: linear-gradient(to right,  #b1610660, #8a4302, #b16106, #412b03d5) 1;
+  border-radius: 5px;
+  box-shadow: inset 6px 6px 6px #cbced1, inset -6px -6px 6px white;
 }
 
 #objetivo{
@@ -702,7 +688,7 @@ button[type="submit"] {
   font-size: 40px;
   background-color: rgba(255, 96, 22, 0);
   border-radius: 2px;
-  border-bottom: 2px solid #ff5e00;
+  border: 2px solid #ff5e00;
   box-shadow: 0 10px 6px rgba(0, 0, 0, 0.459);
 }
 

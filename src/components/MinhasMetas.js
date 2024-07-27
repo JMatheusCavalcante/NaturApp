@@ -65,7 +65,6 @@ const MinhasMetas = () => {
               <label htmlFor="metas">Período</label>
               <select id="metas" name="periodo" value={novaMeta.periodo} onChange={handleInputChange}>
               <option value="" disabled selected>Escolha o Período</option>
-                <option value="diaria">Meta Diária</option>
                 <option value="semanal">Meta Semanal</option>
                 <option value="mensal">Meta Mensal</option>
               </select>
