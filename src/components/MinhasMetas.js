@@ -39,19 +39,14 @@ const MinhasMetas = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await addGoal(novaMeta);
-    await fetchMetas(); // Recalcula as metas após adicionar uma nova meta
+    await fetchMetas(); // Atualiza as metas após adicionar uma nova meta
     setNovaMeta({ nome: '', objetivo: '', periodo: '' });
     setShowPopup(false);
   };
 
   const handleDeleteGoal = async (id) => {
     await deleteGoal(id);
-    await fetchMetas();
-  };
-
-  const handleDeleteSale = async (id) => {
-    await deleteSale(id);
-    await fetchMetas();
+    await fetchMetas(); // Atualiza as metas após deletar uma meta
   };
 
   return (

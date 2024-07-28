@@ -215,7 +215,7 @@ export const updateGoalProgress = async (id, newProgress, newSales) => {
       goal.vendasAssociadas = newSales;
       const updateRequest = store.put(goal);
       updateRequest.onsuccess = () => {
-        resolve(goal);
+        resolve();
       };
       updateRequest.onerror = (event) => {
         reject('Erro ao atualizar meta: ' + event.target.errorCode);
@@ -227,8 +227,24 @@ export const updateGoalProgress = async (id, newProgress, newSales) => {
   });
 };
 
-// Função para obter vendas por IDs
+// Função para obter vendas por ids
 const getSalesByIds = async (ids) => {
-  const allSales = await getAllSales();
-  return allSales.filter(sale => ids.includes(sale.id));
+  const db = await openDB();
+  const transaction = db.transaction(SALES_STORE_NAME, 'readonly');
+  const store = transaction.objectStore(SALES_STORE_NAME);
+
+  const sales = [];
+  for (const id of ids) {
+    const request = store.get(id);
+    await new Promise((resolve, reject) => {
+      request.onsuccess = (event) => {
+        sales.push(event.target.result);
+        resolve();
+      };
+      request.onerror = (event) => {
+        reject('Erro ao obter venda: ' + event.target.errorCode);
+      };
+    });
+  }
+  return sales;
 };
