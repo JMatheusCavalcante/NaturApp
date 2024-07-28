@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { addGoal, getAllGoals, deleteGoal } from '../indexedDB';
+import { addGoal, getAllGoals, deleteGoal, getAllSales, deleteSale } from '../indexedDB';
 import '../App.css';
 
 const MinhasMetas = () => {
@@ -8,12 +8,18 @@ const MinhasMetas = () => {
   const [metas, setMetas] = useState([]);
   const [novaMeta, setNovaMeta] = useState({ nome: '', objetivo: '', periodo: '' });
 
-  useEffect(() => {
-    const fetchMetas = async () => {
-      const allMetas = await getAllGoals();
-      setMetas(allMetas.reverse());
-    };
+  const fetchMetas = async () => {
+    const allMetas = await getAllGoals();
+    const allSales = await getAllSales();
+    const metasWithProgress = allMetas.map(meta => {
+      const totalSales = allSales.reduce((acc, sale) => acc + (sale.sanduiches * 5 + sale.caldo * 5 + sale.cafe * 2), 0);
+      const progresso = Math.min((totalSales / meta.objetivo) * 100, 100);
+      return { ...meta, progresso };
+    });
+    setMetas(metasWithProgress.reverse());
+  };
 
+  useEffect(() => {
     fetchMetas();
   }, []);
 
@@ -33,18 +39,19 @@ const MinhasMetas = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await addGoal(novaMeta);
-    const updatedMetas = await getAllGoals();
-    setMetas(updatedMetas.reverse()); // Atualiza a lista de metas
+    await fetchMetas(); // Recalcula as metas após adicionar uma nova meta
     setNovaMeta({ nome: '', objetivo: '', periodo: '' });
     setShowPopup(false);
   };
 
   const handleDeleteGoal = async (id) => {
-    console.log(`Tentando deletar meta com id: ${id}`); // Log do ID da meta
     await deleteGoal(id);
-    const updatedMetas = await getAllGoals();
-    console.log('Metas atualizadas após deleção:', updatedMetas); // Log das metas atualizadas
-    setMetas(updatedMetas.reverse());
+    await fetchMetas();
+  };
+
+  const handleDeleteSale = async (id) => {
+    await deleteSale(id);
+    await fetchMetas();
   };
 
   return (
@@ -59,12 +66,12 @@ const MinhasMetas = () => {
                 <input type="text" name="nome" value={novaMeta.nome} onChange={handleInputChange} />
               </label>
               <label>
-                Objetivo
-                <input type="text" id="objetivo" name="objetivo" value={novaMeta.objetivo} onChange={handleInputChange} />
+                Objetivo (em R$)
+                <input type="number" id="objetivo" name="objetivo" value={novaMeta.objetivo} onChange={handleInputChange} />
               </label>
               <label htmlFor="metas">Período</label>
               <select id="metas" name="periodo" value={novaMeta.periodo} onChange={handleInputChange}>
-              <option value="" disabled selected>Escolha o Período</option>
+                <option value="" disabled>Escolha o Período</option>
                 <option value="semanal">Meta Semanal</option>
                 <option value="mensal">Meta Mensal</option>
               </select>
@@ -80,11 +87,16 @@ const MinhasMetas = () => {
           <div className="MinhasMetas">
             <ul>
               {metas.map((meta, index) => (
-                <li key={index}>
+                <li key={index} className="meta-item">
                   <div className="meta-details">
                     <strong>Nome:</strong> {meta.nome} <br />
-                    <strong>Objetivo:</strong> {meta.objetivo} <br />
+                    <strong>Objetivo:</strong> R$ {meta.objetivo} <br />
                     <strong>Período:</strong> {meta.periodo}
+                    <div className="progress-container">
+                      <div className="progress-bar" style={{ width: `${meta.progresso}%` }}>
+                        <span>{meta.progresso.toFixed(2)}%</span>
+                      </div>
+                    </div>
                   </div>
                   <button className="delete-button" onClick={() => handleDeleteGoal(meta.id)}>
                     <i className="fas fa-trash-alt"></i>
