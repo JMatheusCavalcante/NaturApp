@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { addGoal, getAllGoals, deleteGoal, getAllSales, deleteSale } from '../indexedDB';
+import { addGoal, getAllGoals, deleteGoal, getAllSales,} from '../indexedDB';
 import '../App.css';
 
 const MinhasMetas = () => {

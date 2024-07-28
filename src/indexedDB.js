@@ -64,9 +64,8 @@ export const addSale = async (sale) => {
 
 // Função para atualizar as metas com a nova venda
 const updateGoalsWithSale = async (sale, saleId) => {
-  const db = await openDB();
-  const transaction = db.transaction(GOALS_STORE_NAME, 'readwrite');
-  const store = transaction.objectStore(GOALS_STORE_NAME);
+  
+  
 
   const goals = await getAllGoals();
   goals.forEach(async (goal) => {
@@ -128,9 +127,9 @@ export const deleteSale = async (id) => {
 
 // Função para atualizar as metas após a exclusão de uma venda
 const updateGoalsAfterSaleDeletion = async (saleId) => {
-  const db = await openDB();
-  const transaction = db.transaction(GOALS_STORE_NAME, 'readwrite');
-  const store = transaction.objectStore(GOALS_STORE_NAME);
+ 
+  
+ 
 
   const goals = await getAllGoals();
   for (const goal of goals) {
