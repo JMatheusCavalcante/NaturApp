@@ -10,9 +10,9 @@ const VendasDoDia = () => {
     cafe: '',
     date: '',
   });
-  
+
   const [buttonActive, setButtonActive] = useState(false);
-  const [goals, setGoals] = useState([]); // Estado para armazenar as metas
+  const [goals, setGoals] = useState([]);
 
   useEffect(() => {
     const fetchGoals = async () => {
@@ -34,7 +34,35 @@ const VendasDoDia = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('Dados do formulário:', formData);
-    
+
+    // Obter a data do formulário e combinar com a hora atual
+    const { date } = formData;
+    const currentTime = new Date();
+    const saleDateTime = new Date(date);
+    saleDateTime.setHours(currentTime.getHours());
+    saleDateTime.setMinutes(currentTime.getMinutes());
+    saleDateTime.setSeconds(currentTime.getSeconds());
+
+    // Subtrair 3 horas
+    saleDateTime.setHours(saleDateTime.getHours() - 3);
+
+    // Verificar se a data ajustada é anterior à data original
+    if (saleDateTime.getDate() < new Date(date).getDate()) {
+      saleDateTime.setDate(saleDateTime.getDate() + 1);
+    }
+
+    if (isNaN(saleDateTime.getTime())) {
+      console.error('Data inválida:', saleDateTime);
+      return;
+    }
+
+    const saleDataWithTime = {
+      ...formData,
+      date: saleDateTime.toISOString()
+    };
+
+    console.log('Dados da venda com data e hora:', saleDataWithTime);
+
     // Calcular o total das vendas
     const totalVendas = 
       parseFloat(formData.sanduiches || 0) + 
@@ -42,7 +70,7 @@ const VendasDoDia = () => {
       parseFloat(formData.cafe || 0);
 
     // Adicionar a venda
-    await addSale(formData);
+    await addSale(saleDataWithTime);
     
     // Atualizar o progresso das metas associadas
     const updatedGoals = goals.map(goal => {
@@ -61,7 +89,7 @@ const VendasDoDia = () => {
     });
     handleButtonClick();
   };
-  
+
   const handleButtonClick = () => {
     setButtonActive(true);
     setTimeout(() => {

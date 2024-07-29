@@ -1,8 +1,8 @@
 const DATABASE_NAME = 'MinhasContasApp';
-const DATABASE_VERSION = 4; // Incrementa a versão do banco de dados para forçar a atualização
+const DATABASE_VERSION = 4;
 const SALES_STORE_NAME = 'vendas';
 const EXPENSES_STORE_NAME = 'custos';
-const GOALS_STORE_NAME = 'metas'; // Nome do novo store para metas
+const GOALS_STORE_NAME = 'metas';
 
 export const openDB = () => {
   return new Promise((resolve, reject) => {
@@ -23,6 +23,7 @@ export const openDB = () => {
         goalStore.createIndex('periodo', 'periodo', { unique: false });
         goalStore.createIndex('progresso', 'progresso', { unique: false });
         goalStore.createIndex('vendasAssociadas', 'vendasAssociadas', { unique: false });
+        goalStore.createIndex('dataCriacao', 'dataCriacao', { unique: false });
       } else {
         const goalStore = event.target.transaction.objectStore(GOALS_STORE_NAME);
         if (!goalStore.indexNames.contains('progresso')) {
@@ -30,6 +31,9 @@ export const openDB = () => {
         }
         if (!goalStore.indexNames.contains('vendasAssociadas')) {
           goalStore.createIndex('vendasAssociadas', 'vendasAssociadas', { unique: false });
+        }
+        if (!goalStore.indexNames.contains('dataCriacao')) {
+          goalStore.createIndex('dataCriacao', 'dataCriacao', { unique: false });
         }
       }
     };
@@ -44,206 +48,163 @@ export const openDB = () => {
   });
 };
 
-// Função para adicionar uma venda
 export const addSale = async (sale) => {
-  const db = await openDB();
-  const store = db.transaction(SALES_STORE_NAME, 'readwrite').objectStore(SALES_STORE_NAME);
-  const saleRequest = store.add(sale);
+  try {
+    const db = await openDB();
+    const transaction = db.transaction(SALES_STORE_NAME, 'readwrite');
+    const store = transaction.objectStore(SALES_STORE_NAME);
+    const saleRequest = store.add(sale);
 
-  return new Promise((resolve, reject) => {
-    saleRequest.onsuccess = async (event) => {
-      const saleId = event.target.result;
-      await updateGoalsWithSale(sale, saleId);
-      resolve(saleId);
-    };
-    saleRequest.onerror = (event) => {
-      reject('Erro ao adicionar venda: ' + event.target.errorCode);
-    };
-  });
-};
+    const saleId = await new Promise((resolve, reject) => {
+      saleRequest.onsuccess = (event) => resolve(event.target.result);
+      saleRequest.onerror = (event) => reject('Erro ao adicionar venda: ' + event.target.errorCode);
+    });
 
-// Função para atualizar as metas com a nova venda
-const updateGoalsWithSale = async (sale, saleId) => {
-  
-  
+    // Utilize a data fornecida no formulário para comparações
+    const saleDate = new Date(sale.date); // Certifique-se de que 'sale.date' está no formato adequado
 
-  const goals = await getAllGoals();
-  goals.forEach(async (goal) => {
-    if (isSaleWithinGoalPeriod(sale, goal)) {
-      const updatedSales = [...goal.vendasAssociadas, saleId];
-      const updatedProgress = await calculateGoalProgress(goal, updatedSales);
-      await updateGoalProgress(goal.id, updatedProgress, updatedSales);
-    }
-  });
-};
-
-// Função para verificar se a venda está dentro do período da meta
-const isSaleWithinGoalPeriod = (sale, goal) => {
-  const saleDate = new Date(sale.date);
-  const [start, end] = goal.periodo;
-  return saleDate >= new Date(start) && saleDate <= new Date(end);
-};
-
-// Função para calcular o progresso da meta (usando valores numéricos)
-const calculateGoalProgress = async (goal, salesIds) => {
-  const sales = await getSalesByIds(salesIds);
-  const totalSalesValue = sales.reduce((acc, sale) => acc + parseFloat(sale.total), 0); // Converter para número
-  const goalTarget = goal.objetivo;
-  return Math.min((totalSalesValue / goalTarget) * 100, 100);
-};
-
-// Função para obter todas as vendas
-export const getAllSales = async () => {
-  const db = await openDB();
-  const store = db.transaction(SALES_STORE_NAME, 'readonly').objectStore(SALES_STORE_NAME);
-  return new Promise((resolve, reject) => {
-    const request = store.getAll();
-    request.onsuccess = () => {
-      resolve(request.result);
-    };
-    request.onerror = (event) => {
-      reject('Erro ao obter dados: ' + event.target.errorCode);
-    };
-  });
-};
-
-// Função para deletar uma venda (chamando updateGoalsAfterSaleDeletion)
-export const deleteSale = async (id) => {
-  const db = await openDB();
-  const transaction = db.transaction(SALES_STORE_NAME, 'readwrite');
-  const store = transaction.objectStore(SALES_STORE_NAME);
-
-  return new Promise((resolve, reject) => {
-    const deleteRequest = store.delete(id);
-    deleteRequest.onsuccess = async () => {
-      await updateGoalsAfterSaleDeletion(id);
-      resolve();
-    };
-    deleteRequest.onerror = (event) => {
-      reject('Erro ao deletar venda: ' + event.target.errorCode);
-    };
-  });
-};
-
-// Função para atualizar as metas após a exclusão de uma venda
-const updateGoalsAfterSaleDeletion = async (saleId) => {
- 
-  
- 
-
-  const goals = await getAllGoals();
-  for (const goal of goals) {
-    if (goal.vendasAssociadas && goal.vendasAssociadas.includes(saleId)) {
-      const updatedSales = goal.vendasAssociadas.filter(id => id !== saleId);
-      const updatedProgress = await calculateGoalProgress(goal, updatedSales);
-      await updateGoalProgress(goal.id, updatedProgress, updatedSales);
-    }
+    await updateGoalsWithSale(saleDate, saleId); // Passe a data da venda para a função de atualização
+    return saleId;
+  } catch (error) {
+    console.error(error);
   }
 };
 
-// Função para adicionar um custo
+const updateGoalsWithSale = async (saleDate, saleId) => {
+  const goals = await getAllGoals();
+  goals.forEach(async (goal) => {
+    const goalCreationDate = new Date(goal.dataCriacao);
+
+    console.log(`Data da Venda: ${saleDate.toISOString()}`);
+    console.log(`Data da Criação da Meta: ${goalCreationDate.toISOString()}`);
+
+    if (saleDate >= goalCreationDate) {
+      const updatedSales = [...(goal.vendasAssociadas || []), saleId];
+      const updatedProgress = await calculateGoalProgress(goal, updatedSales);
+      await updateGoalProgress(goal.id, updatedProgress, updatedSales);
+    }
+  });
+};
+
+const calculateGoalProgress = async (goal, sales) => {
+  const db = await openDB();
+  const store = db.transaction(SALES_STORE_NAME, 'readonly').objectStore(SALES_STORE_NAME);
+  const salesData = await Promise.all(sales.map(saleId => store.get(saleId)));
+
+  // Certifique-se de que os dados de vendas estão corretos
+  console.log('Dados das Vendas:', salesData);
+
+  // Calcule o total de vendas
+  const totalSales = salesData.reduce((acc, sale) => {
+    // Converta as propriedades para números
+    const sanduiches = parseFloat(sale.sanduiches) || 0;
+    const caldo = parseFloat(sale.caldo) || 0;
+    const cafe = parseFloat(sale.cafe) || 0;
+
+    // Calcule o total
+    return acc + (sanduiches * 5 + caldo * 5 + cafe * 2);
+  }, 0);
+
+  console.log('Total de Vendas:', totalSales);
+
+  // Verifique o objetivo
+  if (goal.objetivo === 0) return 0; // Evitar divisão por zero
+
+  // Calcule o progresso
+  const progress = (totalSales / goal.objetivo) * 100;
+  console.log('Progresso Calculado:', progress);
+
+  // Garantir que o progresso não exceda 100%
+  return Math.min(progress, 100);
+};
+
+const getAllItems = async (storeName) => {
+  try {
+    const db = await openDB();
+    const store = db.transaction(storeName, 'readonly').objectStore(storeName);
+    const request = store.getAll();
+    return await new Promise((resolve, reject) => {
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = (event) => reject('Erro ao obter dados: ' + event.target.errorCode);
+    });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getAllSales = () => getAllItems(SALES_STORE_NAME);
+export const getAllExpenses = () => getAllItems(EXPENSES_STORE_NAME);
+
+const deleteItem = async (storeName, id) => {
+  try {
+    const db = await openDB();
+    const transaction = db.transaction(storeName, 'readwrite');
+    const store = transaction.objectStore(storeName);
+    const request = store.delete(id);
+    return await new Promise((resolve, reject) => {
+      request.onsuccess = () => resolve();
+      request.onerror = (event) => reject('Erro ao deletar item: ' + event.target.errorCode);
+    });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const deleteSale = (id) => deleteItem(SALES_STORE_NAME, id);
+export const deleteExpense = (id) => deleteItem(EXPENSES_STORE_NAME, id);
+
 export const addExpense = async (expense) => {
   const db = await openDB();
   const store = db.transaction(EXPENSES_STORE_NAME, 'readwrite').objectStore(EXPENSES_STORE_NAME);
   return store.add(expense);
 };
 
-// Função para obter todos os custos
-export const getAllExpenses = async () => {
-  const db = await openDB();
-  const store = db.transaction(EXPENSES_STORE_NAME, 'readonly').objectStore(EXPENSES_STORE_NAME);
-  return new Promise((resolve, reject) => {
-    const request = store.getAll();
-    request.onsuccess = () => {
-      resolve(request.result);
-    };
-    request.onerror = (event) => {
-      reject('Erro ao obter dados: ' + event.target.errorCode);
-    };
-  });
-};
-
-// Função para deletar um custo
-export const deleteExpense = async (id) => {
-  const db = await openDB();
-  const store = db.transaction(EXPENSES_STORE_NAME, 'readwrite').objectStore(EXPENSES_STORE_NAME);
-  return store.delete(id);
-};
-
-// Função para adicionar uma meta (garantindo que objetivo seja um número)
 export const addGoal = async (goal) => {
   const db = await openDB();
   const store = db.transaction(GOALS_STORE_NAME, 'readwrite').objectStore(GOALS_STORE_NAME);
-  goal.objetivo = parseFloat(goal.objetivo.replace(',', '.')); // Converter para número
-  goal.progresso = 0; // Inicializa o progresso com 0%
-  goal.vendasAssociadas = []; // Inicializa a lista de vendas associadas vazia
+  goal.objetivo = parseFloat(goal.objetivo.replace(',', '.')); // Garantir que objetivo seja um número
+  goal.progresso = 0; // Progresso inicial de 0%
+  goal.vendasAssociadas = [];
+
+  // Captura a data atual em formato local
+  const now = new Date();
+  goal.dataCriacao = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString();
+
+  console.log(`Meta criada: Nome: ${goal.nome}, Data de Criação: ${goal.dataCriacao}`);  
   return store.add(goal);
 };
 
-// Função para obter todas as metas
 export const getAllGoals = async () => {
-  const db = await openDB();
-  const store = db.transaction(GOALS_STORE_NAME, 'readonly').objectStore(GOALS_STORE_NAME);
-  return new Promise((resolve, reject) => {
-    const request = store.getAll();
-    request.onsuccess = () => {
-      resolve(request.result);
-    };
-    request.onerror = (event) => {
-      reject('Erro ao obter dados: ' + event.target.errorCode);
-    };
-  });
+  return getAllItems(GOALS_STORE_NAME);
 };
 
-// Função para deletar uma meta
-export const deleteGoal = async (id) => {
-  const db = await openDB();
-  const store = db.transaction(GOALS_STORE_NAME, 'readwrite').objectStore(GOALS_STORE_NAME);
-  return store.delete(id);
+export const deleteGoal = (id) => {
+  return deleteItem(GOALS_STORE_NAME, id);
 };
 
-// Função para atualizar o progresso da meta
 export const updateGoalProgress = async (id, newProgress, newSales) => {
-  const db = await openDB();
-  const store = db.transaction(GOALS_STORE_NAME, 'readwrite').objectStore(GOALS_STORE_NAME);
-  const request = store.get(id);
-  return new Promise((resolve, reject) => {
-    request.onsuccess = async () => {
-      const goal = request.result;
-      goal.progresso = newProgress;
-      goal.vendasAssociadas = newSales;
-      const updateRequest = store.put(goal);
-      updateRequest.onsuccess = () => {
-        resolve();
-      };
-      updateRequest.onerror = (event) => {
-        reject('Erro ao atualizar meta: ' + event.target.errorCode);
-      };
-    };
-    request.onerror = (event) => {
-      reject('Erro ao obter meta: ' + event.target.errorCode);
-    };
-  });
-};
-
-// Função para obter vendas por ids
-const getSalesByIds = async (ids) => {
-  const db = await openDB();
-  const transaction = db.transaction(SALES_STORE_NAME, 'readonly');
-  const store = transaction.objectStore(SALES_STORE_NAME);
-
-  const sales = [];
-  for (const id of ids) {
+  try {
+    const db = await openDB();
+    const transaction = db.transaction(GOALS_STORE_NAME, 'readwrite');
+    const store = transaction.objectStore(GOALS_STORE_NAME);
     const request = store.get(id);
-    await new Promise((resolve, reject) => {
-      request.onsuccess = (event) => {
-        sales.push(event.target.result);
-        resolve();
-      };
-      request.onerror = (event) => {
-        reject('Erro ao obter venda: ' + event.target.errorCode);
-      };
+
+    const goal = await new Promise((resolve, reject) => {
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = (event) => reject('Erro ao obter meta: ' + event.target.errorCode);
     });
+
+    goal.progresso = newProgress;
+    goal.vendasAssociadas = newSales;
+    const updateRequest = store.put(goal);
+
+    await new Promise((resolve, reject) => {
+      updateRequest.onsuccess = () => resolve();
+      updateRequest.onerror = (event) => reject('Erro ao atualizar meta: ' + event.target.errorCode);
+    });
+
+    return goal;
+  } catch (error) {
+    console.error(error);
   }
-  return sales;
 };

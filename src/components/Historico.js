@@ -36,7 +36,7 @@ const Historico = () => {
     setSales(salesWithTotal);
     calculateDailyTotal(salesWithTotal);
   };
-
+  
   const handleDeleteExpense = async (id) => {
     await deleteExpense(id);
     const updatedExpenses = await getAllExpenses();

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { addGoal, getAllGoals, deleteGoal, getAllSales,} from '../indexedDB';
+import { addGoal, getAllGoals, deleteGoal, getAllSales } from '../indexedDB';
 import '../App.css';
 
 const MinhasMetas = () => {
@@ -11,11 +11,33 @@ const MinhasMetas = () => {
   const fetchMetas = async () => {
     const allMetas = await getAllGoals();
     const allSales = await getAllSales();
+  
+    console.log('Metas:', allMetas);
+    console.log('Vendas:', allSales);
+  
     const metasWithProgress = allMetas.map(meta => {
-      const totalSales = allSales.reduce((acc, sale) => acc + (sale.sanduiches * 5 + sale.caldo * 5 + sale.cafe * 2), 0);
+      const metaCreationDate = new Date(meta.dataCriacao);
+     
+      // Filtra as vendas que ocorreram após a criação da meta
+      const totalSales = allSales.reduce((acc, sale) => {
+        const saleDate = new Date(sale.date);
+        if (saleDate >= metaCreationDate) {
+          const sanduiches = parseFloat(sale.sanduiches || 0);
+          const caldo = parseFloat(sale.caldo || 0);
+          const cafe = parseFloat(sale.cafe || 0);
+          const saleTotal = sanduiches * 5 + caldo * 5 + cafe * 2;
+          return acc + saleTotal;
+        }
+        return acc;
+      }, 0);
+  
+      console.log('Valor total das vendas após a criação da meta:', totalSales);
+      
       const progresso = Math.min((totalSales / meta.objetivo) * 100, 100);
       return { ...meta, progresso };
     });
+  
+    console.log('Metas com progresso:', metasWithProgress.reverse());
     setMetas(metasWithProgress.reverse());
   };
 
@@ -38,7 +60,13 @@ const MinhasMetas = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await addGoal(novaMeta);
+    const newGoal = {
+      ...novaMeta,
+      progresso: 0,
+      vendasAssociadas: [],
+      dataCriacao: new Date().toISOString(),
+    };
+    await addGoal(newGoal);
     await fetchMetas(); // Atualiza as metas após adicionar uma nova meta
     setNovaMeta({ nome: '', objetivo: '', periodo: '' });
     setShowPopup(false);
