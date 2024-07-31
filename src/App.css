@@ -782,6 +782,55 @@ button[type="submit"] {
   left: 90px; /* Ajuste conforme necessário */
 }
 
+/*---------------------------------------------------------------------*/
+/*----------------- PopUP De Comemoração da Meta --------------------- */
+/*---------------------------------------------------------------------*/
+
+
+.popup100-container {
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #0c814b;
+  width: 60%;
+  height: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  padding: 20px;
+  border-radius: 60px;
+  box-shadow: 20px 1px 1000px #49b318;
+}
+
+.popup100-container h2 {
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.popup100-button {
+  margin: 0 10px;
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  text-decoration: none;
+  flex: 1;
+  text-align: center;
+}
+
 
 
 
@@ -790,7 +839,7 @@ button[type="submit"] {
 .footer {
   text-align: center;
   padding-left: 32%;
-  margin-top: 42%;
+  margin-top: 55%;
   position: relative;
   
   width: 100%;

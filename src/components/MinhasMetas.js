@@ -11,33 +11,27 @@ const MinhasMetas = () => {
   const fetchMetas = async () => {
     const allMetas = await getAllGoals();
     const allSales = await getAllSales();
-  
-    console.log('Metas:', allMetas);
-    console.log('Vendas:', allSales);
-  
+
     const metasWithProgress = allMetas.map(meta => {
       const metaCreationDate = new Date(meta.dataCriacao);
-     
-      // Filtra as vendas que ocorreram após a criação da meta
-      const totalSales = allSales.reduce((acc, sale) => {
+      let totalSales = 0;
+
+      // Calcular apenas com vendas após a data de criação da meta
+      allSales.forEach(sale => {
         const saleDate = new Date(sale.date);
         if (saleDate >= metaCreationDate) {
           const sanduiches = parseFloat(sale.sanduiches || 0);
           const caldo = parseFloat(sale.caldo || 0);
           const cafe = parseFloat(sale.cafe || 0);
-          const saleTotal = sanduiches * 5 + caldo * 5 + cafe * 2;
-          return acc + saleTotal;
+          totalSales += sanduiches * 5 + caldo * 5 + cafe * 2;
         }
-        return acc;
-      }, 0);
-  
-      console.log('Valor total das vendas após a criação da meta:', totalSales);
-      
-      const progresso = Math.min((totalSales / meta.objetivo) * 100, 100);
-      return { ...meta, progresso };
+      });
+
+      const progresso = totalSales > 0 ? Math.min((totalSales / meta.objetivo) * 100, 100) : 0; // Garantir que o progresso inicial seja 0%
+      console.log(`Meta ID: ${meta.id}, Progresso Calculado: ${progresso.toFixed(2)}%, Total de Vendas: ${totalSales}`);
+      return { ...meta, progresso }; 
     });
-  
-    console.log('Metas com progresso:', metasWithProgress.reverse());
+
     setMetas(metasWithProgress.reverse());
   };
 
@@ -60,21 +54,38 @@ const MinhasMetas = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Captura a data e hora atual no fuso horário local
+    const localDate = new Date();
+    const timezoneOffset = localDate.getTimezoneOffset() * 60000; // Offset em milissegundos
+    const localISOTime = new Date(localDate - timezoneOffset).toISOString().slice(0, -1);
+
     const newGoal = {
       ...novaMeta,
-      progresso: 0,
       vendasAssociadas: [],
-      dataCriacao: new Date().toISOString(),
+      progresso: 0,
+      dataCriacao: localISOTime, // Usando a data local formatada
     };
-    await addGoal(newGoal);
-    await fetchMetas(); // Atualiza as metas após adicionar uma nova meta
-    setNovaMeta({ nome: '', objetivo: '', periodo: '' });
-    setShowPopup(false);
+
+    try {
+      await addGoal(newGoal);
+      console.log(`Nova Meta Criada: ${JSON.stringify(newGoal)}`);
+      await fetchMetas();
+      setNovaMeta({ nome: '', objetivo: '', periodo: '' });
+      setShowPopup(false);
+      
+    } catch (error) {
+      console.error('Erro ao adicionar meta:', error);
+    }
   };
 
   const handleDeleteGoal = async (id) => {
-    await deleteGoal(id);
-    await fetchMetas(); // Atualiza as metas após deletar uma meta
+    try {
+      await deleteGoal(id);
+      await fetchMetas();
+    } catch (error) {
+      console.error('Erro ao deletar meta:', error);
+    }
   };
 
   return (
@@ -109,12 +120,14 @@ const MinhasMetas = () => {
         {metas.length > 0 ? (
           <div className="MinhasMetas">
             <ul>
-              {metas.map((meta, index) => (
-                <li key={index} className="meta-item">
+              {metas.map((meta) => (
+                <li key={meta.id} className="meta-item">
                   <div className="meta-details">
                     <strong>Nome:</strong> {meta.nome} <br />
                     <strong>Objetivo:</strong> R$ {meta.objetivo} <br />
                     <strong>Período:</strong> {meta.periodo}
+                    <br />
+                    <strong>Data de Criação:</strong> {new Date(meta.dataCriacao).toLocaleString()}
                     <div className="progress-container">
                       <div className="progress-bar" style={{ width: `${meta.progresso}%` }}>
                         <span>{meta.progresso.toFixed(2)}%</span>

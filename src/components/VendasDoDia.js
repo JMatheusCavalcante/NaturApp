@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { addSale, getAllGoals, updateGoalProgress } from '../indexedDB';
 import '../App.css';
+import ComemorationPopup from './ComemorationPopup';
 
 const VendasDoDia = () => {
   const [formData, setFormData] = useState({
@@ -13,6 +14,7 @@ const VendasDoDia = () => {
 
   const [buttonActive, setButtonActive] = useState(false);
   const [goals, setGoals] = useState([]);
+  const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
     const fetchGoals = async () => {
@@ -34,51 +36,58 @@ const VendasDoDia = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('Dados do formulário:', formData);
-
+  
     // Obter a data do formulário e combinar com a hora atual
     const { date } = formData;
+    const localDateTime = new Date(date); // Data do formulário
+  
+    // Definir a hora atual no objeto localDateTime
     const currentTime = new Date();
-    const saleDateTime = new Date(date);
-    saleDateTime.setHours(currentTime.getHours());
-    saleDateTime.setMinutes(currentTime.getMinutes());
-    saleDateTime.setSeconds(currentTime.getSeconds());
-
-    // Subtrair 3 horas
-    saleDateTime.setHours(saleDateTime.getHours() - 3);
-
+    localDateTime.setHours(currentTime.getHours());
+    localDateTime.setMinutes(currentTime.getMinutes());
+    localDateTime.setSeconds(currentTime.getSeconds());
+  
+    // Ajustar para UTC-3 (fuso horário de Brasília)
+    localDateTime.setHours(localDateTime.getHours() - 3);
+  
     // Verificar se a data ajustada é anterior à data original
-    if (saleDateTime.getDate() < new Date(date).getDate()) {
-      saleDateTime.setDate(saleDateTime.getDate() + 1);
+    if (localDateTime.getDate() < currentTime.getDate()) {
+      localDateTime.setDate(localDateTime.getDate() + 1);
     }
-
-    if (isNaN(saleDateTime.getTime())) {
-      console.error('Data inválida:', saleDateTime);
+  
+    if (isNaN(localDateTime.getTime())) {
+      console.error('Data inválida:', localDateTime);
       return;
     }
-
+  
     const saleDataWithTime = {
       ...formData,
-      date: saleDateTime.toISOString()
+      date: localDateTime.toISOString()
     };
-
+  
     console.log('Dados da venda com data e hora:', saleDataWithTime);
-
+  
     // Calcular o total das vendas
     const totalVendas = 
       parseFloat(formData.sanduiches || 0) + 
       parseFloat(formData.caldo || 0) + 
       parseFloat(formData.cafe || 0);
-
+  
     // Adicionar a venda
     await addSale(saleDataWithTime);
     
     // Atualizar o progresso das metas associadas
-    const updatedGoals = goals.map(goal => {
+    const updatedGoals = await Promise.all(goals.map(async (goal) => {
       const novoProgresso = Math.min(100, ((goal.progresso || 0) + totalVendas) / goal.objetivo * 100);
-      updateGoalProgress(goal.id, novoProgresso);
+      await updateGoalProgress(goal.id, novoProgresso);
+      console.log(`Meta: ${goal.nome}, Novo Progresso: ${novoProgresso}`);
+      if (novoProgresso >= 100) {
+        console.log('Meta atingiu 100%, exibindo popup');
+        setShowPopup(true);
+      }
       return { ...goal, progresso: novoProgresso };
-    });
-
+    }));
+  
     setGoals(updatedGoals);
     
     setFormData({
@@ -89,7 +98,8 @@ const VendasDoDia = () => {
     });
     handleButtonClick();
   };
-
+  
+  
   const handleButtonClick = () => {
     setButtonActive(true);
     setTimeout(() => {
@@ -97,9 +107,14 @@ const VendasDoDia = () => {
     }, 2000);
   };
 
+  const handleClosePopup = () => {
+    setShowPopup(false);
+  };
+
   return (
     <div className="content vendasdodia-container">
       <h1>Vendas do Dia</h1>
+      {showPopup && <ComemorationPopup onClose={handleClosePopup} />}
       <form onSubmit={handleSubmit} className="vendas-form">
         <label>
           Sanduíche
