@@ -5,7 +5,7 @@ import '../App.css'; // CSS principal
 const Home = () => (
   <div className="App-header">
     <div className="main-container">
-      <h1>Bem-vinda, amor!</h1>
+      <h1>Seja Bem-vindo!</h1>
       <h2>Aqui você pode gerenciar seu negócio, criar metas e mais.</h2>
       
       
