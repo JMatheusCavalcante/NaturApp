@@ -1,5 +1,6 @@
 # NaturApp
 
+
 Gestão simples e prática para microempreendedores. (Mobile)
 
 ## Índice
@@ -48,3 +49,4 @@ Todos os direitos reservados. Este software é de propriedade de Matheus Cavalca
 Para dúvidas ou sugestões, entre em contato através do email jmc.vilasboas2@gmail.com
 
 LinkedIn: https://www.linkedin.com/in/matheuscavalcantevb/
+
