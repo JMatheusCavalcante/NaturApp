@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import '../App.css'; // Importe seu arquivo CSS principal aqui
-import { addExpense } from '../indexedDB'; // Importe a função addExpense
+import '../App.css'; 
+import { addExpense } from '../indexedDB'; 
 
 const GerenciamentoDeGastos = () => {
   const [valor, setValor] = useState('');
